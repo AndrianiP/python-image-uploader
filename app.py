@@ -1,4 +1,5 @@
 from components.button import Button
+from components.dragdrop import DragDrop
 from components.text import Title
 from palette import Pallete
 from PyQt5.QtCore import QSize, QRect, Qt
@@ -7,55 +8,7 @@ import sys
 
 
 def printHey():
-    print(Pallete.primary)
-
-class DragDrop(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setAcceptDrops(True)
-        self.button = Button(text="Drag and Drop",variant="ghost",fn=printHey)
-
-class Button(QPushButton):
-    def __init__(self,text:str, variant:str, fn):
-        super().__init__()
-        self.setText(text)
-        if(variant=="ghost"):
-            # blur = QGraphicsBlurEffect()
-            # # blur.setBlurRadius(2)
-            # # self.setGraphicsEffect(blur)
-            self.setAcceptDrops(True)
-            self.setStyleSheet("""
-                QPushButton {
-                    background-color: """+Pallete.ghost+""";
-                    border: 4px dashed """+Pallete.gray+""";
-                    height: 300px;
-                    width:200px;
-                    font-weight:600;
-                    color: #3363FF
-                }        
-                QPushButton:hover {
-                    background-color: #76DAFF;            
-                }
-            """)
-        elif(variant == "primary"):
-            self.setStyleSheet("""
-                QPushButton {
-                    background-color: """+Pallete.white+""";
-                    border-style:outset;
-                    border-radius: 32px;
-                    border-width: 2px;
-                    padding: 8px;
-                    color: #3363FF;
-                } 
-                QPushButton:hover {
-                    background-color: #76DAFF;            
-                }
-                QPushButton:clicked{
-                    background-color: #FF0000;
-                }
-            """)
-        self.clicked.connect(fn)
-        
+        print(Pallete.primary)
 class MainWindow(QMainWindow):
     def __init__(self):  
         super().__init__()
@@ -65,7 +18,7 @@ class MainWindow(QMainWindow):
         # Sets starting position/size: X,Y, Width, Height
         self.setGeometry(500,200,1000,700)
         self.init_gui()
-        
+        self.setAcceptDrops(True)
         self.setStyleSheet("""
             QWidget {
                 background-color: """+Pallete.primary+""";               
@@ -76,16 +29,13 @@ class MainWindow(QMainWindow):
     
     def init_gui(self):
         layout = QVBoxLayout()
-        title = Title("Image Hub")
-        dragDrop = Button("Drag and Drop", variant="ghost", fn=printHey)
+        title = Title("Image Hub", "#FFFFFF" )
+        dragDrop = DragDrop()
         anotherButton = Button("PRIMARY TEST", variant="primary",fn=printHey)
         
-        layout.addStretch(1)
         layout.addWidget(title)
         layout.addWidget(dragDrop)
-        layout.addWidget(anotherButton)
-        layout.addStretch(1)
-        
+        layout.addWidget(anotherButton)   
         # Displays Everything
         widget = QWidget()
         widget.setLayout(layout)

@@ -11,8 +11,11 @@
         - QListWidget (Select Multiple items at once (mass download))
         - https://www.pythonguis.com/faq/pyqt-drag-drop-widgets/
         - https://www.youtube.com/watch?v=mcT_bK1px_g
+        - https://stackoverflow.com/questions/14895302/qt-drag-drop-add-support-for-dragging-files-to-the-applications-main-window
+
     ## GUI Layout/Styling
         - https://www.pythonguis.com/tutorials/pyqt-layouts/
+        - https://realpython.com/python-pyqt-layout/
     ## Reactivity (Dialogs and Alerts)
         - https://www.pythonguis.com/tutorials/pyqt-dialogs/
 
