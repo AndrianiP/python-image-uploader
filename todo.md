@@ -8,6 +8,9 @@
         - https://www.pythonguis.com/tutorials/pyqt-signals-slots-events/
     ## Widgets (React Components)
         - https://www.pythonguis.com/tutorials/pyqt-basic-widgets/
+        - QListWidget (Select Multiple items at once (mass download))
+        - https://www.pythonguis.com/faq/pyqt-drag-drop-widgets/
+        - https://www.youtube.com/watch?v=mcT_bK1px_g
     ## GUI Layout/Styling
         - https://www.pythonguis.com/tutorials/pyqt-layouts/
     ## Reactivity (Dialogs and Alerts)
