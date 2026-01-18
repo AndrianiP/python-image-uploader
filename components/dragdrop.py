@@ -70,12 +70,14 @@ class DragDrop(QWidget):
             a0.ignore()
             
 #Drag Drop Widget Text
+# https://doc.qt.io/archives/qt-5.15/qlabel.html
 class _DragDropArea(QLabel):
     def __init__(self):
         super().__init__()
 
         self.setText("Drag and Drop")
         self.setAlignment(Qt.AlignCenter)
+        self.setWordWrap(True)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self.setStyleSheet("""
             QLabel {
