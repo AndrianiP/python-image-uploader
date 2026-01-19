@@ -3,11 +3,9 @@ from typing import List
 import paramiko
 import pathlib
 
-# from dotenv import load_dotenv
-
-# # 1. LOAD THE DOTENV FIRST
-# load_dotenv()
-
+# S/o to these resources this was the easiest part compared to styling with pyqt
+# https://medium.com/featurepreneur/ssh-in-python-using-paramiko-e08fd8a039f7
+# https://docs.paramiko.org/en/stable/api/sftp.html
 class Client():
     def __init__(self):
         self.client = paramiko.SSHClient()
@@ -18,11 +16,12 @@ class Client():
                             password=os.getenv("USER_PASSWORD"))
         
     
-    #TODO ADD COMMENTS
+    # Establishes a secure file transfer protocol client
     def uploadFiles(self, filePaths):
         sftpClient = self.client.open_sftp()
         try:
             for path in filePaths:
+                # Gets just the name of the file from the path
                 remotePath = pathlib.PurePath(path).name
                 sftpClient.put(path,remotePath)
         finally:
@@ -30,18 +29,20 @@ class Client():
             filePaths = []
             for output in stdout:
                 path = str(output)
+                # Filters only images to be added
                 if path.endswith(".png") or path.endswith(".jpg"):
                     filePaths.append(path)
             sftpClient.close()
         
+        # Downloads files to the download path set in environment variables
     def downloadFiles(self, downloadPath):
         sftpClient = self.client.open_sftp()
         sftpClient.get(downloadPath, os.getenv("DOWNLOAD_PATH") + downloadPath)
         sftpClient.close()
     
     def getServerFiles(self)->List[str]:
+        # include stdin, stderr to get rid of readlines being unknown since the command returns a tuple
         stdin,stdout,stderr=self.client.exec_command("ls")
-        
         files = stdout.readlines()
         filePaths = []
         for file in files:

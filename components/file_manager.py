@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import QSizePolicy, QListWidget, QWidget, QLabel, QHBoxLayo
 class FileManager(QWidget):
     def __init__(self):
         super().__init__()
+        self.setAcceptDrops(True)
+
         self.client = Client()
         self.filePaths = []
         
@@ -19,6 +21,7 @@ class FileManager(QWidget):
         #Allows Drag and Drop box to take up max space
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         
+        #Adds buttons
         buttonLayout = QHBoxLayout()
         self.uploadBtn = Button("Upload", variant="primary", fn=lambda:self.upload(self.filePaths))
         self.cancelBtn = Button("Cancel", variant="destructive", fn=lambda:self.clearUploadPaths())
@@ -26,13 +29,13 @@ class FileManager(QWidget):
         buttonLayout.addWidget(self.cancelBtn)
         layout.addLayout(buttonLayout)
         
+        #Adds File list on server
         self.serverList = ServerFileList()
         serverListLayout = QVBoxLayout()
         serverListLayout.addWidget(self.serverList)
         layout.addLayout(serverListLayout)
         
-        self.setAcceptDrops(True)
-
+    # Uploads Files and Updates list of files on server
     def upload(self, filePaths):
         self.client.uploadFiles(filePaths)
         self.clearUploadPaths()
@@ -64,6 +67,7 @@ class FileManager(QWidget):
                         self.filePaths.append(localPath)
                     else:
                         # https://www.pythonguis.com/tutorials/pyqt-dialogs/
+                        # Catches Error throws a small dialog box
                         alert = QDialog()
                         alertLayout = QVBoxLayout()
                         message = QLabel("Files must be .jpg or .png")
@@ -102,6 +106,7 @@ class _DragDropArea(QLabel):
             }
         """)
 
+# Gets all files from the server and displays them in a list
 class ServerFileList(QListWidget):
     def __init__(self):
         super().__init__()
@@ -114,6 +119,7 @@ class ServerFileList(QListWidget):
                 border: 4px solid """+Pallete.gray+""";
                 height: 600px;
                 width:200px;
+                font: 14px;
                 font-weight:600;
                 color: #3363FF
             }        
