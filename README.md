@@ -1,5 +1,9 @@
 # python-image-uploader
-Image Uploader and Downloader built with PyQt while listening to "Bon Iver, Bon Iver" by Bon Iver, and a lot of other things. This took longer than i expected cause of how structuring and styling pyqt is, and i never used it before.
+Image Uploader and Downloader built with PyQt while listening to "Bon Iver, Bon Iver" by Bon Iver, and a lot of other things. This took longer than i expected cause of how structuring and styling pyqt is, and i never used it before. I thought i couldve got it done in a couple album listens took like 8 albums and a lot of singles shuffling through. 
+
+I enjoyed this little project, wish i couldve used TailwindCSS for styling however. I had to rewrite my ssh commucations, which if i wouldve done it correctly initially it wouldve been done so much quicker. To not learn a new library which i thought was going to take longer i decided to initially use subpreocess because i thought it was going to be quicker. It was not i kept catching myself trying to do workarounds which I spent a lot of time researching. 
+
+Once I switched over to [paramiko](https://docs.paramiko.org/en/stable/) it was a breeze. I was done with the file upload and download in like 10 minutes. 
 
 
 # Guide
