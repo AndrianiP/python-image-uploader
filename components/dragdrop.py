@@ -8,6 +8,7 @@ from PyQt5.QtCore import QSize, QRect, Qt, QMimeData
 from PyQt5.QtWidgets import QApplication, QSizePolicy, QFileDialog, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QMainWindow, QDialog,  QMessageBox, QGraphicsBlurEffect
 
 
+#Break this into different Classes
 class DragDrop(QWidget):
     def __init__(self):
         super().__init__()
@@ -34,11 +35,13 @@ class DragDrop(QWidget):
     def uploadFiles(self):
         print()
         for path in self.filePaths:
-            #https://man7.org/linux/man-pages/man1/scp.1.html
-            subprocess.run(f"scp -P {os.getenv('SSH_PORT')} -i uploader_key -o StrictHostKeyChecking='no' {path} {os.getenv('USER_NAME')}@localhost:~/" )
-        print("SUCCESS")
+            try:
+                #https://man7.org/linux/man-pages/man1/scp.1.html
+                subprocess.run(f'scp -P {os.getenv("SSH_PORT")} -i uploader_key -o StrictHostKeyChecking="no" "{path}" {os.getenv("USER_NAME")}@localhost:~/' )
+            finally:
+                #TODO Update list of files on server
             
-            
+    
     # https://www.youtube.com/watch?v=mcT_bK1px_g
     def dragEnterEvent(self, a0: QDragEnterEvent) -> None:
         if a0.mimeData().hasUrls():

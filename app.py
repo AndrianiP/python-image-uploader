@@ -6,9 +6,6 @@ from PyQt5.QtCore import QSize, QRect, Qt
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QMainWindow, QDialog,  QMessageBox, QGraphicsBlurEffect
 import sys
 from dotenv import load_dotenv
-
-def printHey():
-        print(Pallete.primary)
 class MainWindow(QMainWindow):
     def __init__(self):  
         super().__init__()
@@ -31,11 +28,9 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         title = Title("Image Hub", "#FFFFFF" )
         dragDrop = DragDrop()
-        anotherButton = Button("PRIMARY TEST", variant="primary",fn=printHey)
         
         layout.addWidget(title)
-        layout.addWidget(dragDrop)
-        layout.addWidget(anotherButton)   
+        layout.addWidget(dragDrop) 
         # Displays Everything
         widget = QWidget()
         widget.setLayout(layout)
