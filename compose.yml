@@ -1,0 +1,18 @@
+---
+services:
+  openssh-server:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: openssh-server-andriani
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - USER_NAME=${USER_NAME:-admin}
+      - USER_PASSWORD=${USER_PASSWORD:-password}
+      - PASSWORD_ACCESS=${PASSWORD_ACCESS:-true}
+    volumes:
+      # Stores config in a 'config' folder in the current directory
+      - ./config:/config
+    ports:
+      - "${SSH_PORT:-2222}:2222"
+    restart: unless-stopped
