@@ -28,4 +28,10 @@
     ## File Transfer through SSH
         - https://www.ssh.com/academy/ssh/scp
         - https://unix.stackexchange.com/questions/413840/how-do-i-scp-via-ssh
+        
+        having to refactor cause using workarounds with subprocess to send console commands is a hassle and not correct.
+        - https://medium.com/featurepreneur/ssh-in-python-using-paramiko-e08fd8a039f7
+        - https://docs.paramiko.org/en/stable/api/sftp.html
 
+3. **MAKE LIST OF ALL FILES ON SYSTEM**
+    - Use QLISTWIDGET

@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent
-from palette import Pallete
+from util.palette import Pallete
 from PyQt5.QtGui import QDrag
 from PyQt5.QtCore import QSize, QRect, Qt, QMimeData
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QMainWindow, QDialog,  QMessageBox, QGraphicsBlurEffect

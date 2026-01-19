@@ -1,0 +1,6 @@
+/config
+
+__pycache__/*
+uploader_key*
+.env
+/components/__pycache__
