@@ -10,8 +10,6 @@ services:
       - USER_NAME=${USER_NAME:-admin}
       - USER_PASSWORD=${USER_PASSWORD:-password}
       - PASSWORD_ACCESS=${PASSWORD_ACCESS:-true}
-      # Generate your public SSH key 
-      - PUBLIC_KEY=${PUBLIC_KEY}
     volumes:
       # Stores config in a 'config' folder in the current directory
       - ./config:/config
