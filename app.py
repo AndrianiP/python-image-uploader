@@ -5,7 +5,7 @@ from palette import Pallete
 from PyQt5.QtCore import QSize, QRect, Qt
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QMainWindow, QDialog,  QMessageBox, QGraphicsBlurEffect
 import sys
-
+from dotenv import load_dotenv
 
 def printHey():
         print(Pallete.primary)
@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
         
         
 
+load_dotenv()
 
 app = QApplication(sys.argv)
 window = MainWindow()

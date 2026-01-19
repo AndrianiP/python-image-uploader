@@ -1,4 +1,6 @@
+import subprocess
 from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent
+import os
 from components.button import Button
 from palette import Pallete
 from PyQt5.QtGui import QDrag
@@ -15,10 +17,10 @@ class DragDrop(QWidget):
         layout.addWidget(self.dragDrop)
         #Allows Drag and Drop box to take up max space
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-
+        print(os.getenv("USER_NAME"))
         buttonLayout = QHBoxLayout()
         # TODO MAKE SUBMIT FUNCTION ACTUALLY UPLOAD TO SERVER USING SSH
-        self.uploadBtn = Button("Upload", variant="primary", fn=lambda:print("Submitted Files"))
+        self.uploadBtn = Button("Upload", variant="primary", fn=lambda:self.uploadFiles())
         self.cancelBtn = Button("Cancel", variant="destructive", fn=lambda:self.clearUploadPaths())
         buttonLayout.addWidget(self.uploadBtn)
         buttonLayout.addWidget(self.cancelBtn)
@@ -28,7 +30,15 @@ class DragDrop(QWidget):
     def clearUploadPaths(self):
         self.filePaths.clear()
         self.dragDrop.setText("Drag and Drop")
-        
+    
+    def uploadFiles(self):
+        print()
+        for path in self.filePaths:
+            #https://man7.org/linux/man-pages/man1/scp.1.html
+            subprocess.run(f"scp -P {os.getenv('SSH_PORT')} -i uploader_key -o StrictHostKeyChecking='no' {path} {os.getenv('USER_NAME')}@localhost:~/" )
+        print("SUCCESS")
+            
+            
     # https://www.youtube.com/watch?v=mcT_bK1px_g
     def dragEnterEvent(self, a0: QDragEnterEvent) -> None:
         if a0.mimeData().hasUrls():
