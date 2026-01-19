@@ -17,14 +17,13 @@ class Client():
                             username=os.getenv("USER_NAME"),
                             password=os.getenv("USER_PASSWORD"))
         
-        
-    def uploadFiles(self, filePaths) -> List[str]:
-        print("ATTEMPTING TO UPLOAD")
+    
+    #TODO ADD COMMENTS
+    def uploadFiles(self, filePaths):
         sftpClient = self.client.open_sftp()
         try:
             for path in filePaths:
                 remotePath = pathlib.PurePath(path).name
-                print(f"REMOTE PATH: {remotePath}")
                 sftpClient.put(path,remotePath)
         finally:
             stdout=self.client.exec_command("ls")
@@ -34,24 +33,23 @@ class Client():
                 if path.endswith(".png") or path.endswith(".jpg"):
                     filePaths.append(path)
             sftpClient.close()
-            print("SFTP CLOSED")
-            return filePaths
         
     def downloadFiles(self, downloadPath):
         sftpClient = self.client.open_sftp()
         sftpClient.get(downloadPath, os.getenv("DOWNLOAD_PATH") + downloadPath)
         sftpClient.close()
+    
+    def getServerFiles(self)->List[str]:
+        stdin,stdout,stderr=self.client.exec_command("ls")
         
-
-# test = Client()
-# test.uploadFiles(["D:/Pictures/Camera Roll/3_green.png"])
-# test.downloadFiles("TF141 Site Color.png")
-
-# uploader=test.client.open_sftp()
-# uploader.put("D:/Pictures/Camera Roll/4_pink.png","4_pink.png")
-# stdin,stdout,stderr=test.client.exec_command("ls")
-# uploader.close()
-# print(stdout.readlines())
-# # → [u’Desktop\n’,u’Documents\n’,u’Downloads\n’,u’Videos\n’]
-# print(stderr.readlines())
-# # → []
+        files = stdout.readlines()
+        filePaths = []
+        for file in files:
+            path = str(file).strip()
+            if path.endswith(".png") or path.endswith(".jpg"):
+                filePaths.append(path)
+        return filePaths
+    
+    def printServerFiles(self):
+        print(self.getServerFiles())
+        

@@ -1,12 +1,9 @@
-import subprocess
 from PyQt5.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent
-import os
 from components.button import Button
 from util.ssh_client import Client
 from util.palette import Pallete
-from PyQt5.QtGui import QDrag
-from PyQt5.QtCore import QSize, QRect, Qt, QMimeData
-from PyQt5.QtWidgets import QApplication, QSizePolicy, QFileDialog, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QMainWindow, QDialog,  QMessageBox, QGraphicsBlurEffect
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QSizePolicy, QListWidget, QWidget, QLabel, QHBoxLayout, QVBoxLayout, QDialog, QListWidgetItem, QGridLayout
 
 
 #Break this into different Classes
@@ -28,11 +25,18 @@ class FileManager(QWidget):
         buttonLayout.addWidget(self.uploadBtn)
         buttonLayout.addWidget(self.cancelBtn)
         layout.addLayout(buttonLayout)
+        
+        self.serverList = ServerFileList()
+        serverListLayout = QVBoxLayout()
+        serverListLayout.addWidget(self.serverList)
+        layout.addLayout(serverListLayout)
+        
         self.setAcceptDrops(True)
 
     def upload(self, filePaths):
         self.client.uploadFiles(filePaths)
         self.clearUploadPaths()
+        self.serverList.updateFilelist()
         
     def clearUploadPaths(self):
         self.filePaths.clear()
@@ -57,7 +61,6 @@ class FileManager(QWidget):
                 for path in qPaths:
                     localPath = path.toLocalFile()
                     if("jpg" in localPath or "png" in localPath):
-                        print(localPath)
                         self.filePaths.append(localPath)
                     else:
                         # https://www.pythonguis.com/tutorials/pyqt-dialogs/
@@ -71,9 +74,6 @@ class FileManager(QWidget):
                         a0.ignore()
                         
             self.dragDrop.setText("; ".join(self.filePaths))
-            print(self.filePaths)
-            for paths in self.filePaths:
-                print(paths)
             a0.accept()
         else:
             a0.ignore()
@@ -101,3 +101,28 @@ class _DragDropArea(QLabel):
                 background-color: #76DAFF;            
             }
         """)
+
+class ServerFileList(QListWidget):
+    def __init__(self):
+        super().__init__()
+        self.client = Client()
+        self.updateFilelist()
+        self.setWordWrap(True)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self.setStyleSheet("""
+            QListWidget {
+                background-color: """+Pallete.white+""";
+                border: 4px solid """+Pallete.gray+""";
+                height: 600px;
+                width:200px;
+                font-weight:600;
+                color: #3363FF
+            }        
+        """)
+        
+    def updateFilelist(self):
+        self.clear()
+        self.filePaths = self.client.getServerFiles()
+        for file in self.filePaths:
+            item = QListWidgetItem(file)
+            self.addItem(item)
