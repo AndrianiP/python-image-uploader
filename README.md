@@ -21,7 +21,7 @@ In your terminal run `docker compose up` after your .env file has been populated
 
 ## Run App.py
 
-Run App.py then drag and drop files into the "Drag Drop" area. If you are happy with the files selected, click **Upload**. If you want to reset the list of files to be uploaded, click **Cancel**.
+Run App.py then drag and drop files into the "Drag Drop" area. If you are happy with the files selected, click **Upload**. If you want to reset the list of files to be uploaded, click **Cancel**. Download a file by clicking the **file name** on the file list.
 
 ## How to get into SSH to check if files been uploaded
 Run `ssh -p <port> <userName>@<host>`. If you are running it locally the host will be `localhost`.
