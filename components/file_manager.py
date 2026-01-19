@@ -107,7 +107,6 @@ class ServerFileList(QListWidget):
         super().__init__()
         self.client = Client()
         self.updateFilelist()
-        self.setWordWrap(True)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self.setStyleSheet("""
             QListWidget {
@@ -119,6 +118,12 @@ class ServerFileList(QListWidget):
                 color: #3363FF
             }        
         """)
+        
+        self.itemPressed.connect(self.requestFile)
+    #self.itemPressed.connect(self.client.downloadFiles)
+    # Can only concatenate str no QLISTWIDGET ITEM so we go with the method below
+    def requestFile(self, item: QListWidgetItem):
+        self.client.downloadFiles(item.text())
         
     def updateFilelist(self):
         self.clear()
