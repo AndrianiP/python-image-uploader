@@ -16,7 +16,7 @@ class FileManager(QWidget):
         self.filePaths = []
         
         layout = QVBoxLayout(self)
-        self.dragDrop = _DragDropArea()
+        self.dragDrop = DragDropArea()
         layout.addWidget(self.dragDrop)
         #Allows Drag and Drop box to take up max space
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -84,7 +84,7 @@ class FileManager(QWidget):
             
 #Drag Drop Widget Text
 # https://doc.qt.io/archives/qt-5.15/qlabel.html
-class _DragDropArea(QLabel):
+class DragDropArea(QLabel):
     def __init__(self):
         super().__init__()
 
